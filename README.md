@@ -83,20 +83,18 @@ TYPE=app-image ./scripts/build-dmg.sh   # dist/AdaGIDE.app, sin imagen de disco
 
 `scripts/build-dmg.sh` usa `jpackage`, que sólo genera paquetes macOS *en* macOS. Desde
 Linux o Windows, deja que lo construya el workflow
-[`packaging/workflows/macos-dmg.yml`](packaging/workflows/macos-dmg.yml): compila en
+[`macOS DMG`](.github/workflows/macos-dmg.yml): compila en
 `macos-14` (arm64) y `macos-13` (x86_64), monta el `.dmg`, verifica el bundle y sube el
 resultado como artefacto (y como *release* si empujas una etiqueta `v*`).
 
 ### Activar los workflows
 
-Los dos workflows viven en `packaging/workflows/` porque el token con el que se creó esta
-rama no tiene permiso para escribir en `.github/workflows/`. Actívalos con un commit tuyo:
+El workflow `macOS DMG` ya está activo en `.github/workflows/` y se ejecuta en cada `push`.
+El workflow de integración de Ubuntu permanece disponible en `packaging/workflows/` si se
+quiere activar más adelante:
 
 ```sh
-git mv packaging/workflows/macos-dmg.yml .github/workflows/macos-dmg.yml
-git mv -f packaging/workflows/build.yml  .github/workflows/build.yml
-git commit -m "Activar los workflows de AdaGIDE"
-git push
+git mv -f packaging/workflows/build.yml .github/workflows/build.yml
 ```
 
 `packaging/workflows/build.yml` compila y pasa las pruebas en Ubuntu, instalando GNAT para
