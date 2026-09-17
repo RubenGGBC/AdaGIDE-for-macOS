@@ -1,6 +1,6 @@
-target/
-build/
-dist/
+/target/
+/build/
+/dist/
 *.class
 *.o
 *.ali

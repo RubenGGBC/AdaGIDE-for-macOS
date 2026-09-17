@@ -23,6 +23,10 @@ public final class GenerateIcon {
     };
 
     public static void main(String[] args) throws Exception {
+        // Draw off-screen: without this the AWT event thread starts, and being non-daemon it keeps
+        // the JVM alive after the icons are written, hanging scripts/build-dmg.sh.
+        System.setProperty("java.awt.headless", "true");
+
         File directory = new File(args.length > 0 ? args[0] : "packaging/AdaGIDE.iconset");
         directory.mkdirs();
         for (int[] size : SIZES) {
@@ -33,6 +37,7 @@ public final class GenerateIcon {
             ImageIO.write(image, "png", new File(directory, name));
         }
         System.out.println("Icon written to " + directory);
+        System.exit(0);
     }
 
     static BufferedImage render(int size) {
